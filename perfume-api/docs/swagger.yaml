@@ -1,0 +1,111 @@
+definitions:
+  models.Product:
+    properties:
+      created_at:
+        type: integer
+      description:
+        type: string
+      id:
+        type: integer
+      image:
+        type: string
+      name:
+        type: string
+      price:
+        type: number
+      updated_at:
+        type: integer
+    type: object
+info:
+  contact: {}
+  description: API cho hệ thống bán nước hoa.
+  title: Perfume API
+  version: "1.0"
+paths:
+  /api/products:
+    get:
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/models.Product'
+            type: array
+      summary: Lấy tất cả sản phẩm
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: Thông tin sản phẩm
+        in: body
+        name: product
+        required: true
+        schema:
+          $ref: '#/definitions/models.Product'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.Product'
+      summary: Tạo sản phẩm mới
+  /api/products/{id}:
+    delete:
+      parameters:
+      - description: ID sản phẩm
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+      summary: Xóa sản phẩm
+    get:
+      parameters:
+      - description: ID sản phẩm
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.Product'
+      summary: Lấy sản phẩm theo ID
+    put:
+      consumes:
+      - application/json
+      parameters:
+      - description: ID sản phẩm
+        in: path
+        name: id
+        required: true
+        type: integer
+      - description: Thông tin mới
+        in: body
+        name: product
+        required: true
+        schema:
+          $ref: '#/definitions/models.Product'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.Product'
+      summary: Cập nhật sản phẩm
+swagger: "2.0"

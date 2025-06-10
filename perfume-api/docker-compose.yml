@@ -1,0 +1,54 @@
+version: "3.8"
+
+services:
+  db:
+    image: postgres:15
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: buri114455
+      POSTGRES_DB: go_crud
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 3s
+      timeout: 5s
+      retries: 10
+
+  redis:
+    image: redis:alpine
+    ports:
+      - "6379:6379"
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 3s
+      timeout: 5s
+      retries: 10
+
+  api:
+    build: .
+    ports:
+      - "8080:8080"
+    depends_on:
+      db:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    restart: unless-stopped
+    environment:
+      - DB_HOST=db
+      - DB_PORT=5432
+      - DB_USER=postgres
+      - DB_PASSWORD=buri114455
+      - DB_NAME=go_crud
+      - REDIS_ADDR=redis:6379
+      - JWT_SECRET=your-secret-key
+    volumes:
+      - ./:/app
+    command: air -c .air.toml
+
+volumes:
+  pgdata:

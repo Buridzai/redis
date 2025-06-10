@@ -1,0 +1,172 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "description": "API cho hệ thống bán nước hoa.",
+        "title": "Perfume API",
+        "contact": {},
+        "version": "1.0"
+    },
+    "paths": {
+        "/api/products": {
+            "get": {
+                "produces": [
+                    "application/json"
+                ],
+                "summary": "Lấy tất cả sản phẩm",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/models.Product"
+                            }
+                        }
+                    }
+                }
+            },
+            "post": {
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "summary": "Tạo sản phẩm mới",
+                "parameters": [
+                    {
+                        "description": "Thông tin sản phẩm",
+                        "name": "product",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/models.Product"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/models.Product"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/products/{id}": {
+            "get": {
+                "produces": [
+                    "application/json"
+                ],
+                "summary": "Lấy sản phẩm theo ID",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "ID sản phẩm",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/models.Product"
+                        }
+                    }
+                }
+            },
+            "put": {
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "summary": "Cập nhật sản phẩm",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "ID sản phẩm",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "description": "Thông tin mới",
+                        "name": "product",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/models.Product"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/models.Product"
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "produces": [
+                    "application/json"
+                ],
+                "summary": "Xóa sản phẩm",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "ID sản phẩm",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "object",
+                            "additionalProperties": {
+                                "type": "string"
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "definitions": {
+        "models.Product": {
+            "type": "object",
+            "properties": {
+                "created_at": {
+                    "type": "integer"
+                },
+                "description": {
+                    "type": "string"
+                },
+                "id": {
+                    "type": "integer"
+                },
+                "image": {
+                    "type": "string"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "price": {
+                    "type": "number"
+                },
+                "updated_at": {
+                    "type": "integer"
+                }
+            }
+        }
+    }
+}
